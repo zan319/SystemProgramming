@@ -12,7 +12,7 @@ tswitch:
             movl %esp, 4(%ebx) # PROC.save_sp = esp
     FIND:   call scheduler
     RESUME: movl running, %ebx # ebx->PROC
-            movl 4(%ebx), %esp #esp = PROC.save_sp
+            movl 4(%ebx), %esp # esp = PROC.save_sp
             popfl
             popl %edi
             popl %esi

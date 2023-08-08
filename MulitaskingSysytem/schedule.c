@@ -157,7 +157,7 @@ int kwait(int *status) {
     PROC *p = running->child;
     PROC *q = running;
     while(p){
-        if(p->status == ZOMBIE && p == running->child){
+        if(p->status == ZOMBIE){
             if(p == running->child){
                 running->child = p->sibling;
             }else{
