@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -w
+CFLAGS = -w -m32
 OBJS = superBlock.c
 
 make_out:
