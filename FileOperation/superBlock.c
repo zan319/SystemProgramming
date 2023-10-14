@@ -18,7 +18,6 @@ int print(char *s, u32 x)
 {
     printf("%-30s = %8d\n", s, x);
 }
-
 int super(char *device)
 {
     fd = open(device, O_RDONLY);
@@ -31,7 +30,7 @@ int super(char *device)
     read(fd, buf, 1024);
     sp = (SUPER *)buf;
 
-    printf("%-30s = %8x ", "s_magic", sp->s_magic);
+    printf("%-30s = %8x ", "s_magic\n", sp->s_magic);
     if(sp->s_magic != 0xEF53)
     {
         printf("Not an EXT2 FS\n");
@@ -68,5 +67,3 @@ int main(int argc, char *argv[])
     super(device);
     return 0;
 }
-
-
