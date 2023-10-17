@@ -14,7 +14,7 @@ GD *gd;
 char buf[1024];
 int fd;
 
-char *device = "mydisk";
+char *device = "disk";
 
 int print(char *s, u32 x)
 {

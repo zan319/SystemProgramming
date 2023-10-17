@@ -13,6 +13,7 @@ typedef struct ext2_super_block SUPER;
 SUPER *sp;
 char buf[1024];
 int fd, blksize, inodesize;
+char *device = "disk";
 
 int print(char *s, u32 x)
 {
@@ -38,8 +39,8 @@ int super(char *device)
     }
 
     printf("EXT2 FS OK\n");
-    print("s_inode_count", sp->s_free_inodes_count);
-    print("s_blocks_count", sp->s_free_blocks_count);
+    print("s_inode_count", sp->s_inodes_count);
+    print("s_blocks_count", sp->s_blocks_count);
     print("s_r_blocks_count", sp->s_r_blocks_count);
     print("s_free_blocks_count", sp->s_free_blocks_count);
     print("s_free_inode_count", sp->s_free_inodes_count);
@@ -58,7 +59,6 @@ int super(char *device)
     printf("block size = %d\n", blksize);
     printf("inode size = %d\n", sp->s_inode_size);
 }
-char *device = "mydisk";
 
 int main(int argc, char *argv[]) 
 {
