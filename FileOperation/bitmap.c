@@ -17,7 +17,8 @@ GD    *gp;
 
 char buf[BLKSIZE];
 int fd;
-char *device = "disk";
+// char *device = "mydisk";
+char *device = "/dev/loop16";
 int get_block(int fd, int blk, char *buf)
 {
     lseek(fd, (long)BLKSIZE * blk, 0);
@@ -47,12 +48,14 @@ int imap(char *device)
     printf("imapblk = %d\n",imapblk);
     get_block(fd, imapblk, buf);
     for (i = 0; i <= ninodes/8; i++) {
-        printf("%02x ",(unsigned char)buf[i]);
+        printf("%02x ", (u8)buf[i]);
     }
     printf("\n");
 }
 
 int main(int argc, char *argv[])
 {
+    if(argc > 1)
+        device = argv[1];
     imap(device);
 }

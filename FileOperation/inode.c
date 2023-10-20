@@ -21,10 +21,10 @@ GD    *gp;
 INODE *ip;
 DIR   *dp;
 char buf[BLKSIZE];
-int fd, firstdata, inodesize, blksize, iblock;
+u32 fd, firstdata, inodesize, blksize, iblock;
 
-char *dev = "disk";
-
+char *device = "/dev/loop16";
+// char *device = "mydisk";
 int get_block(int fd, int blk, char *buf)
 {
     lseek(fd, blk * BLKSIZE, SEEK_SET);
@@ -46,36 +46,41 @@ int inode(char *dev)
     blksize = 1024 * (1 << sp->s_log_block_size);
     firstdata = sp->s_first_data_block;
 
-    printf("first_data_block = %d\nblock_size = %d\ninode_size = %d", 
-                                                firstdata, blksize, firstdata);
+    printf("first_data_block = %u\nblock_size = %u\ninode_size = %u\n", 
+                                                firstdata, blksize, inodesize);
 
     get_block(fd, (firstdata + 1), buf);
     gp = (GD *)buf;
 
-    printf("block_bitmap = %d\ninode_bitmap = %d\ninode_table = %d\n",
+    printf("block_bitmap = %u\ninode_bitmap = %u\ninode_table = %d\n",
             gp->bg_block_bitmap, gp->bg_inode_bitmap, gp->bg_inode_table);
+    printf("free_block =%d \nfress_inodes = %d \n", 
+                    gp->bg_free_inodes_count, gp->bg_used_dirs_count);
 
     iblock = gp->bg_inode_table;
     printf("root inode information:\n");
     printf("-----------------------------------------------\n");
+    printf("size of inode = %u", sizeof(struct ext2_inode));
     get_block(fd, iblock, buf);
-    ip = (INODE *)buf + 1; //ip point at #2 INODE
+    ip = (INODE *)buf + 1;//ip point at #2 INODE
     printf("mode = %4x\n",ip->i_mode);
-    printf("uid = %d, gid = %d\n",ip->i_uid, ip->i_gid);
-    printf("size = %d\n", ip->i_size);
+    printf("uid = %u, gid = %u\n",ip->i_uid, ip->i_gid);
+    printf("size = %u\n", ip->i_size);
     printf("ctime = %s", ctime(&ip->i_ctime));
-    printf("links = %d\n", ip->i_links_count);
+    printf("links = %u\n", ip->i_links_count);
     for(i = 0; i < 15; i++)
     {
         if(ip->i_block[i])
         {
-            printf("i_blocks[%d] = %d\n", i, ip->i_block[i]);
+            printf("i_blocks[%d] = %u\n", i, ip->i_block[i]);
         }
     }
 }
 
 int main (int argc, char *argv[])
 {
-    inode(dev);
+    if(argc > 1)
+        device = argv[1];
+    inode(device);
 }
 

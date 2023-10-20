@@ -244,4 +244,6 @@ docs/dev
 # Submission zip files
 *.zip
 
+
 *.out
+CMakeLists.txt

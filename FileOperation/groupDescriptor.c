@@ -5,7 +5,7 @@
 #include <sys/types.h>
 
 typedef unsigned char   u8;
-typedef unsigned short u16;
+typedef unsigned short u16; 
 typedef unsigned int   u32;
 
 typedef struct ext2_group_desc GD;
@@ -13,8 +13,8 @@ typedef struct ext2_group_desc GD;
 GD *gd;
 char buf[1024];
 int fd;
-
-char *device = "disk";
+// char *device = "vdisk";
+char *device = "/dev/loop16";
 
 int print(char *s, u32 x)
 {

@@ -13,7 +13,8 @@ typedef struct ext2_super_block SUPER;
 SUPER *sp;
 char buf[1024];
 int fd, blksize, inodesize;
-char *device = "disk";
+char *device = "/dev/loop16";
+// char *device = "vdisk";
 
 int print(char *s, u32 x)
 {
@@ -63,7 +64,6 @@ int super(char *device)
 int main(int argc, char *argv[]) 
 {
     if(argc > 1)
-        device  = argv[1];
+        device = argv[1];
     super(device);
-    return 0;
 }
